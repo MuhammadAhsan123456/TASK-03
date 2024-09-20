@@ -28,7 +28,7 @@ body {
 .form-header a:hover {
     text-decoration: underline;
 }
-form {
+.form_div {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;

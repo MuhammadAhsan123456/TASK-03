@@ -12,16 +12,15 @@ const firebaseConfig = {
     messagingSenderId: "286754102966",
     appId: "1:286754102966:web:72ef85c07ff4e024fe1017",
     measurementId: "G-9L0599MDV2"
-};
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const db = getFirestore(app);
 
-document.getElementById('studentForm').addEventListener('submit', function(event) {
+document.getElementById('studentForm').addEventListener('click', function(event) {
     event.preventDefault(); // Prevent default form submission
-
     // Retrieve the form data
     let studentData = {
         firstName: document.getElementById('firstName').value,
@@ -50,7 +49,7 @@ document.getElementById('studentForm').addEventListener('submit', function(event
             }).then(() => {
                 console.log("Student data saved to Firestore.");
                 // Redirect to the student list page
-                window.location.href = 'studentlist.html';
+                window.location.href = './studentform/studentlist.html';
             }).catch((error) => {
                 console.error("Error saving student data to Firestore: ", error);
             });
