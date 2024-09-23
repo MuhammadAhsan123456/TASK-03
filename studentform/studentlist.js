@@ -227,3 +227,67 @@ document.getElementById("handlerSearch").onclick = async function () {
 
   console.log(userNic, "userNic");
 };
+
+
+document.getElementById("handlerSearch").onclick = async function () {
+  const querySnapshot = await getDocs(collection(db, "marks"));
+  const userNicc = document.getElementById("searchNic").value;
+  const innerSingle = document.getElementById("innerSingle");
+  
+  // Clear previous results
+  innerSingle.innerHTML = '';
+
+  // Array to store all marks
+  const arraypush = [];
+  
+  querySnapshot.forEach((doc) => {
+    const marks = doc.data();
+    arraypush.push(marks);
+  });
+
+  // Filter results based on CNIC
+  const userNic = arraypush.filter((user) => user.cnic == userNicc);
+  
+  // If no records found, show a message
+  if (userNic.length === 0) {
+    innerSingle.innerHTML = "<p>No results found for this CNIC.</p>";
+    return;
+  }
+
+  // Create table elements
+  const table = document.createElement("table");
+  const thead = document.createElement("thead");
+  const tbody = document.createElement("tbody");
+
+  // Define table headers
+  thead.innerHTML = `
+    <tr>
+      <th>Course</th>
+      <th>Grade</th>
+      <th>Student ID</th>
+      <th>Marks</th>
+      <th>Total Marks</th>
+    </tr>
+  `;
+
+  // Loop through the filtered results and populate the table rows
+  userNic.forEach((user) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${user.course}</td>
+      <td>${user.grade}</td>
+      <td>${user.studentId}</td>
+      <td>${user.marks}</td>
+      <td>${user.totalMarks}</td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  // Append thead and tbody to the table
+  table.appendChild(thead);
+  table.appendChild(tbody);
+
+  // Append the table to the innerSingle div
+  innerSingle.appendChild(table);
+};
+
